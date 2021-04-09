@@ -32,7 +32,9 @@ import sys
 import threading
 
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+
+tf.compat.v1.disable_eager_execution()
 
 def _int64_feature(value):
     """Wrapper for inserting int64 features into Example proto."""
@@ -294,7 +296,7 @@ def _process_image_files_batch(coder, thread_index, ranges, name, output_directo
                         example = _convert_to_example(image_example, image_buffer, height,
                                                     width)
                 else:
-                    image_buffer=''
+                    image_buffer=b''
                     height = int(image_example['height'])
                     width = int(image_example['width'])
                     example = _convert_to_example(image_example, image_buffer, height,
